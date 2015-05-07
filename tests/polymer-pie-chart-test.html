@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>polymer-histogram tests</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+	<script src="../../webcomponentsjs/webcomponents.js"></script>
+	<script src="../../web-component-tester/browser.js"></script>
+	<script src="../../jquery/dist/jquery.min.js"></script>
+	<script src="../../lodash/lodash.js"></script>
+	<link rel="import" href="../polymer-pie-chart.html">
+</head>
+<body unresolved>
+	<polymer-pie-chart
+		title="Test Title"
+		toolTipLabel="Test Label"
+		defaultColor="#ccc"
+		data="[ ['A', 10, '#f00'], ['B', 10, '#0f0'], ['C', 10] ]">
+		</polymer-pie-chart>
+	<script>
+		window.addEventListener('polymer-ready', function(e) {
+			var el = document.querySelector('polymer-pie-chart');
+			var container = el.$.container;
+			var title = $( container.querySelector('.highcharts-title tspan') ).html();
+			var categoryA = $( container.querySelector('.highcharts-legend-item:nth-child(1) text') ).html();
+			var categoryB = $( container.querySelector('.highcharts-legend-item:nth-child(2) text') ).html();
+			var categoryC = $( container.querySelector('.highcharts-legend-item:nth-child(3) text') ).html();
+
+			suite('<polymer-pie-chart>', function () {
+				test('initializes', function () {
+					assert(el._readied);
+				});
+				test('has Title binding', function () {
+					assert.equal( title, 'Test Title');
+				});
+				test('has X Categories binding', function () {
+					assert.equal( categoryA, 'A' );
+					assert.equal( categoryB, 'B' );
+					assert.equal( categoryC, 'C' );
+				});
+			});
+		});
+	</script>
+</body>
+</html>

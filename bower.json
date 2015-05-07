@@ -1,0 +1,33 @@
+{
+  "name": "polymer-pie-chart",
+  "version": "0.1.0",
+  "authors": [
+    "Raymond Chou <raymond.chou@thecontrolgroup.com>"
+  ],
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer"
+  ],
+  "main": "polymer-pie-chart.html",
+  "description": "Polymer Pie Chart.",
+  "homepage": "https://github.com/the-control-group/polymer-pie-chart/",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^0.5",
+    "highcharts": "~4.1.5",
+    "lodash": "~3.8.0"
+  },
+  "devDependencies": {
+    "iron-doc-viewer": "PolymerElements/iron-doc-viewer",
+    "web-component-tester": "Polymer/web-component-tester#~2.2.6",
+    "jquery": "~2.1.4"
+  }
+}
