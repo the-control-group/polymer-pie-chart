@@ -6,7 +6,7 @@
 __Example:__
 
 ```
-	<polymer-element name="polymer-histogram-demo">
+	<polymer-element name="polymer-pie-chart-demo">
 		<template>
 			<style>
 				#container {
@@ -16,41 +16,43 @@ __Example:__
 				}
 			</style>
 			<div id="container">
-				<p>An example of using <code>&lt;polymer-histogram&gt;</code>:</p>
-				<polymer-histogram
-					coordinates="{{ coordinates }}"
-					title="Demo Graph"
-					yAxisTitle="Y Axis Label"></polymer-histogram>
+				<p>An example of using <code>&lt;polymer-pie-chart&gt;</code>:</p>
+				<polymer-pie-chart
+					title="Demo Pie Chart"
+					toolTipLabel="Demo Label"
+					defaultColor="#ccc"
+					data="{{ data }}">
+					</polymer-pie-chart>
 			</div>
 		</template>
 		<script src="../lodash/lodash.js"></script>
 		<script>
-			function setFake() {
-				return [Math.floor(Math.random()*10), Number((Math.random() * 10).toFixed(2)) ];
+			function randomValue() {
+				return Math.floor(Math.random()*800) + 300;
 			}
 			Polymer({
 				publish: {
-					coordinates: [
-						setFake(),
-						setFake(),
-						setFake(),
-						setFake(),
-						setFake()
-					]
 				},
 				ready: function() {
 					var poly = this;
+					poly.data = [
+						['Category Default', randomValue()],
+						['Category Red', randomValue(), '#c66'],
+						['Category Green', randomValue(), '#6c6'],
+						['Category Blue', randomValue(), '#66c'],
+					];
 					setInterval(function() {
-						var coordinates = _.clone(poly.coordinates);
-						coordinates = coordinates.slice(1);
-						coordinates.push(setFake());
-						poly.coordinates = coordinates;
-					}, 5000);
+						var data = _.clone(poly.data);
+						_.each(data, function(slice) {
+							slice[1] = randomValue();
+						});
+						poly.data = data;
+					}, 3500);
 				}
 			});
 		</script>
 	</polymer-element></polymer-element>
-	<polymer-histogram-demo></polymer-histogram-demo>
+	<polymer-pie-chart-demo></polymer-pie-chart-demo>
 ```
 # Attributes
 
