@@ -1,5 +1,5 @@
 <!--
-@element polymer-histogram
+@element polymer-pie-chart
 @author designbyraychou
 @homepage https://github.com/the-control-group/polymer-pie-chart
 
@@ -71,10 +71,10 @@ Title displayed left of graph to indicate y values;
 -->
 
 <link rel="import" href="../polymer/polymer.html">
-<polymer-element name="polymer-pie-chart" attributes="width height title toolTipLabel data defaultColor options">
+<polymer-element name="polymer-pie-chart" attributes="width height title toolTipLabel center data defaultColors options">
 	<template>
 		<link rel="stylesheet" type="text/css" href="./polymer-pie-chart.css">
-		<div id="container" style="width: {{width}};height: {{height}};">pie-chart</div>
+		<div id="container" style="width: {{width}}px;height: {{height}}px;"></div>
 	</template>
 	<script src="../highcharts/adapters/standalone-framework.js"></script>
 	<script src="../highcharts/highcharts.js"></script>
@@ -82,11 +82,12 @@ Title displayed left of graph to indicate y values;
 	<script>
 		Polymer({
 			publish: {
+				center: [],
 				chart: null,
 				width: 400,
 				height: 400,
 				title: null,
-				defaultColor: '#999',
+				defaultColors: ['#999'],
 				toolTipLabel: null,
 				options: {},
 				data: [],
@@ -104,13 +105,13 @@ Title displayed left of graph to indicate y values;
 				var poly = this;
 				var slices = [];
 				var colors = [];
-				_.each(poly.data, function(data) {
+				_.each(poly.data, function(data,key) {
 					if( data.length > 1 ) {
 						slices.push( [ data[0], data[1] ]);
 						if( data[2] ) {
-							colors.push( data[2] );
+							colors[key] = data[2];
 						} else {
-							colors.push( poly.defaultColor );
+							colors[key] = poly.defaultColors[key] || poly.defaultColors[0];
 						}
 					}
 				});
@@ -119,9 +120,15 @@ Title displayed left of graph to indicate y values;
 			},
 			dataChanged: function(oldValue,newValue) {
 				var poly = this;
-				if( oldValue != null && poly.chart ) {
+				if( oldValue != null && newValue.length && poly.chart ) {
 					poly.setData();
-					poly.chart.series[0].setData(poly.slices);
+					poly.async(function() {
+						if( oldValue.length != newValue.length ) {
+							poly.drawGraph();
+						} else {
+							poly.chart.series[0].setData(poly.slices);
+						}
+					});
 				}
 			},
 			drawGraph: function() {
@@ -149,6 +156,7 @@ Title displayed left of graph to indicate y values;
 					},
 					legend: {
 						align: 'left',
+						verticalAlign: 'top',
 						layout: 'vertical'
 					},
 					plotOptions: {
@@ -169,6 +177,9 @@ Title displayed left of graph to indicate y values;
 						data: poly.slices
 					}]
 				};
+
+				if( poly.center.length ) settings.plotOptions.pie.center = poly.center;
+
 				poly.chart = new Highcharts.Chart(_.extend(
 					settings,
 					poly.options
