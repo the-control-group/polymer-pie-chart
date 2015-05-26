@@ -71,8 +71,13 @@ Title displayed left of graph to indicate y values;
 -->
 
 <link rel="import" href="../polymer/polymer.html">
-<polymer-element name="polymer-pie-chart" attributes="width height title toolTipLabel center data defaultColors options">
+<polymer-element name="polymer-pie-chart" attributes="width height toolTipLabel center data defaultColors options">
 	<template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style:>
 		<link rel="stylesheet" type="text/css" href="./polymer-pie-chart.css">
 		<div id="container" style="width: {{width}}px;height: {{height}}px;"></div>
 	</template>

@@ -26,8 +26,11 @@
     "lodash": "~3.8.0"
   },
   "devDependencies": {
-    "iron-doc-viewer": "PolymerElements/iron-doc-viewer",
     "web-component-tester": "Polymer/web-component-tester#~2.2.6",
     "jquery": "~2.1.4"
+  },
+  "resolutions": {
+    "polymer": "^0.5",
+    "webcomponentsjs": "^0.6.0"
   }
 }
