@@ -71,7 +71,7 @@ Title displayed left of graph to indicate y values;
 -->
 
 <link rel="import" href="../polymer/polymer.html">
-<polymer-element name="polymer-pie-chart" attributes="width height toolTipLabel center data defaultColors options">
+<polymer-element name="polymer-pie-chart">
 	<template>
     <style>
       :host {
@@ -91,7 +91,6 @@ Title displayed left of graph to indicate y values;
 				chart: null,
 				width: 400,
 				height: 400,
-				title: null,
 				defaultColors: ['#999'],
 				toolTipLabel: null,
 				options: {},
