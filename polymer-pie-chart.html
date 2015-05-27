@@ -93,6 +93,9 @@ Title displayed left of graph to indicate y values;
 				colors: [],
 				slices: [],
 			},
+			observe: {
+				'width height': 'drawGraph'
+			},
 			ready: function(event,detail,sender) {
 				var poly = this;
 				poly.async(function() {
@@ -142,7 +145,9 @@ Title displayed left of graph to indicate y values;
 						spacingTop: 0,
 						spacingBottom: 0,
 						spacingLeft: 0,
-						spacingRight: 0
+						spacingRight: 0,
+						height: poly.height,
+						width: poly.width
 					},
 					credits: {
 						enabled: false
