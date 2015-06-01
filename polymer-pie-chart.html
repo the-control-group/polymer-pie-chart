@@ -74,7 +74,9 @@ Title displayed left of graph to indicate y values;
 <polymer-element name="polymer-pie-chart">
 	<template>
 		<link rel="stylesheet" type="text/css" href="./polymer-pie-chart.css">
-		<div id="container"></div>
+    <div class="containter" relative>
+      <div id="chart"></div>
+    </div>
 	</template>
 	<script src="../highcharts/adapters/standalone-framework.js"></script>
 	<script src="../highcharts/highcharts.js"></script>
@@ -84,8 +86,6 @@ Title displayed left of graph to indicate y values;
 			publish: {
 				center: [],
 				chart: null,
-				width: 400,
-				height: 400,
 				defaultColors: ['#999'],
 				toolTipLabel: null,
 				options: {},
@@ -93,15 +93,18 @@ Title displayed left of graph to indicate y values;
 				colors: [],
 				slices: [],
 			},
-			observe: {
-				'width height': 'drawGraph'
-			},
 			ready: function(event,detail,sender) {
 				var poly = this;
 				poly.async(function() {
 					poly.setData();
 					poly.drawGraph();
 				});
+
+
+        this.onresize = function (){
+          var w = $(this).getWidth() + "px";
+          $(this.$.chart).setStyle( { width : w } );
+        }
 			},
 			setData: function() {
 				var poly = this;
@@ -137,7 +140,7 @@ Title displayed left of graph to indicate y values;
 				var poly = this;
 				var settings = {
 					chart: {
-						renderTo: poly.$.container,
+						renderTo: poly.$.chart,
 						plotBackgroundColor: null,
 						plotBorderWidth: null,
 						plotShadow: false,
@@ -146,8 +149,6 @@ Title displayed left of graph to indicate y values;
 						spacingBottom: 0,
 						spacingLeft: 0,
 						spacingRight: 0,
-						height: poly.height,
-						width: poly.width
 					},
 					credits: {
 						enabled: false
@@ -165,7 +166,6 @@ Title displayed left of graph to indicate y values;
 					},
 					plotOptions: {
 						pie: {
-							size: '100%',
 							allowPointSelect: true,
 							cursor: 'pointer',
 							dataLabels: {
